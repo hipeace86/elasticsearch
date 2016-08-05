@@ -27,7 +27,8 @@ RUN set -x \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV PATH /usr/share/elasticsearch/bin:$PATH
-
+RUN wget -O /opt/elasticsearch-jdbc-2.3.4.0-dist.zip http://xbib.org/repository/org/xbib/elasticsearch/importer/elasticsearch-jdbc/2.3.4.0/elasticsearch-jdbc-2.3.4.0-dist.zip\
+    && cd /opt && unzip elasticsearch-jdbc-2.3.4.0-dist.zip && rm elasticsearch-jdbc-2.3.4.0-dist.zip -f
 WORKDIR /usr/share/elasticsearch
 
 RUN set -ex \
@@ -42,8 +43,7 @@ RUN set -ex \
 	done
 
 COPY config ./config
-# add ik&jdbc
-COPY elasticsearch-jdbc-2.3.4.0 /opt/elasticsearch-jdbc-2.3.4.0
+# add ik
 COPY ik ./plugins/ik
 COPY jdbc.sh /opt/jdbc.sh
 
